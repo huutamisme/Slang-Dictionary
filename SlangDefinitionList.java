@@ -33,4 +33,10 @@ public class SlangDefinitionList extends ArrayList<String> {
         }
     }
 
+    public void showDefinition(){
+        for(String definition : this){
+            System.out.println("- " + definition);
+        }
+    }
+
 }
