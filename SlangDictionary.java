@@ -52,6 +52,35 @@ public class SlangDictionary {
             definitions.showDefinition();
             searchedSlang.add(SlangWord);
         }
+        else {
+            System.out.println("SlangWord not found");
+        }
     }
 
+    public SlangDefinitionList searchByDefinition(String keyword){
+        SlangDefinitionList SlangList = new SlangDefinitionList();
+
+        for(Map.Entry<String, SlangDefinitionList> entry : dictionary.entrySet()){
+            String slang = entry.getKey();
+            SlangDefinitionList definitions = entry.getValue();
+
+            String lw_case_Keyword = keyword.toLowerCase();
+
+            for(String definition : definitions){
+                String lw_case_definition = definition.toLowerCase();
+                if(lw_case_definition.contains(lw_case_Keyword)) {
+                    SlangList.add(slang);
+                    break;
+                }
+            }
+        }
+        return SlangList;
+    }
+
+    public void showHistory(){
+        System.out.println("Searched list: ");
+        for (String searched : searchedSlang){
+            System.out.println("- " + searched);
+        }
+    }
 }
