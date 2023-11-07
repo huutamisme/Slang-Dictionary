@@ -25,8 +25,7 @@ public class Main {
         searchBySlang_btn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Xử lý khi nút Search Slang Word được bấm
-                openSearchSlangWindow(dictionary);
+                dictionary.searchBySlang();
             }
         });
 
@@ -34,16 +33,34 @@ public class Main {
         constraints.gridx = 1;
         constraints.gridy = 0;
         pane.add(searchByDefinition_btn,constraints);
+        searchByDefinition_btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dictionary.searchByDefinition();
+            }
+        });
 
         JButton showHistory_btn = new JButton("History");
         constraints.gridx = 2;
         constraints.gridy = 0;
         pane.add(showHistory_btn, constraints);
+        showHistory_btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dictionary.showHistory();
+            }
+        });
 
         JButton addSlangWord_btn = new JButton("Add Slang Word");
         constraints.gridx = 0;
         constraints.gridy = 1;
         pane.add(addSlangWord_btn, constraints);
+        addSlangWord_btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dictionary.addSlang();
+            }
+        });
 
         JButton editSlangWord_btn = new JButton("Edit Slang Word");
         constraints.gridx = 1;
@@ -90,46 +107,6 @@ public class Main {
                 System.exit(0);
             }
         });
-    }
-
-
-
-    private static void openSearchSlangWindow(SlangDictionary dictionary) {
-        JFrame searchFrame = new JFrame("Search Slang Word");
-        searchFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        searchFrame.setSize(400, 200);
-
-        JPanel searchPanel = new JPanel();
-        searchFrame.add(searchPanel);
-
-        JTextField searchField = new JTextField(20);
-        searchPanel.add(searchField);
-
-        JButton searchButton = new JButton("Search");
-        searchPanel.add(searchButton);
-
-        JTextArea resultTextArea = new JTextArea(10, 30);
-        searchPanel.add(resultTextArea);
-
-        searchButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String slangWord = searchField.getText();
-                // Xử lý tìm kiếm slang word ở đây
-                SlangDefinitionList result = new SlangDefinitionList();
-                result = dictionary.searchBySlang(slangWord);
-                if (result != null) {
-                    resultTextArea.setText("Kết quả tìm kiếm cho '" + slangWord + "':\n");
-                    for (String definition : result) {
-                        resultTextArea.append("- " + definition + "\n");
-                    }
-                } else {
-                    resultTextArea.setText("SlangWord not found");
-                }
-            }
-        });
-
-        searchFrame.setVisible(true);
     }
 
 
