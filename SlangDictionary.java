@@ -3,9 +3,11 @@ import java.util.*;
 
 public class SlangDictionary {
     private HashMap<String, SlangDefinitionList> dictionary;
+    private List<String> searchedSlang;
 
     public SlangDictionary(){
         this.dictionary = new HashMap<>();
+        this.searchedSlang = new ArrayList<>();
     }
 
     public SlangDictionary(SlangDictionary a){
@@ -31,11 +33,11 @@ public class SlangDictionary {
                     this.dictionary.put(slang, def_list);
                 }
             }
+            reader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
     public void showDictionary(){
         Set<String> slangword = this.dictionary.keySet();
         for(String slang : slangword){
@@ -43,4 +45,13 @@ public class SlangDictionary {
             dictionary.get(slang).showDefinition();
         }
     }
+
+    public void searchBySlang(String SlangWord){
+        if (dictionary.containsKey(SlangWord)){
+            SlangDefinitionList definitions = dictionary.get(SlangWord);
+            definitions.showDefinition();
+            searchedSlang.add(SlangWord);
+        }
+    }
+
 }
