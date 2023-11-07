@@ -46,14 +46,14 @@ public class SlangDictionary {
         }
     }
 
-    public void searchBySlang(String SlangWord){
+    public SlangDefinitionList searchBySlang(String SlangWord){
         if (dictionary.containsKey(SlangWord)){
             SlangDefinitionList definitions = dictionary.get(SlangWord);
-            definitions.showDefinition();
             searchedSlang.add(SlangWord);
+            return definitions;
         }
         else {
-            System.out.println("SlangWord not found");
+            return null;
         }
     }
 
