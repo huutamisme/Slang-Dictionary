@@ -433,4 +433,229 @@ public class SlangDictionary {
 
         return result.toString();
     }
+
+    public void quizSlang(){
+        JFrame slangFrame = new JFrame("Quiz Slang Word");
+        slangFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        slangFrame.setSize(400,400);
+        slangFrame.setLayout(new GridLayout(2,1));
+
+        Random rand = new Random();
+        List<String> slangList = new ArrayList<>(dictionary.keySet());
+        int randomIndex = rand.nextInt(slangList.size());
+        String randomSlang = slangList.get(randomIndex);
+
+        JPanel questionPanel = new JPanel();
+        slangFrame.add(questionPanel);
+        JLabel slangLabel = new JLabel();
+        slangLabel.setText(randomSlang);
+        slangLabel.setFont(new Font("Serif", Font.BOLD, 24));
+        questionPanel.add(slangLabel);
+
+        JPanel answerPanel = new JPanel();
+        slangFrame.add(answerPanel);
+        answerPanel.setLayout(new GridLayout(2,2));
+        JButton btn_a1 = new JButton();
+        JButton btn_a2 = new JButton();
+        JButton btn_a3 = new JButton();
+        JButton btn_a4 = new JButton();
+        answerPanel.add(btn_a1);
+        answerPanel.add(btn_a2);
+        answerPanel.add(btn_a3);
+        answerPanel.add(btn_a4);
+
+        List<String> answerList = new ArrayList<>();
+
+        SlangDefinitionList correctDefinition = dictionary.get(randomSlang);
+        // Lấy định nghĩa chính xác và thêm vào danh sách đáp án
+        StringBuilder correctAnswer = new StringBuilder();
+        for (String definition : correctDefinition) {
+            correctAnswer.append("- ").append(definition).append("\n");
+        }
+        answerList.add(correctAnswer.toString());
+
+        // Tạo danh sách chứa tất cả các định nghĩa
+        List<SlangDefinitionList> allDefinitions = new ArrayList<>();
+        for (SlangDefinitionList definitions : dictionary.values()) {
+            allDefinitions.add(definitions);
+        }
+
+        // Random ra 3 định nghĩa ngẫu nhiên từ danh sách tất cả các định nghĩa
+        List<SlangDefinitionList> shuffledDefinitions = new ArrayList<>();
+        Collections.shuffle(allDefinitions);
+
+        for (int i = 0; i < 3; i++) {
+                shuffledDefinitions.add(allDefinitions.get(i));
+            }
+
+        StringBuilder incorrectAnswer = new StringBuilder();
+        for(SlangDefinitionList item : shuffledDefinitions){
+            for(String definition: item){
+                incorrectAnswer.append("- ").append(definition).append("\n");
+            }
+            answerList.add(incorrectAnswer.toString());
+            incorrectAnswer.setLength(0);
+        }
+
+
+        if (answerList.size() >= 4) {
+            // Random vị trí của đáp án đúng trong danh sách đáp án
+            Collections.shuffle(answerList);
+
+            // Gán các đáp án vào các nút
+            btn_a1.setText(answerList.get(0));
+            btn_a2.setText(answerList.get(1));
+            btn_a3.setText(answerList.get(2));
+            btn_a4.setText(answerList.get(3));
+        }
+
+        btn_a1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                checkAnswer(btn_a1.getText(), correctAnswer.toString());
+                slangFrame.dispose();
+            }
+        });
+
+        btn_a2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                checkAnswer(btn_a2.getText(), correctAnswer.toString());
+                slangFrame.dispose();
+            }
+        });
+
+        btn_a3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                checkAnswer(btn_a3.getText(), correctAnswer.toString());
+                slangFrame.dispose();
+            }
+        });
+
+        btn_a4.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                checkAnswer(btn_a4.getText(), correctAnswer.toString());
+                slangFrame.dispose();
+            }
+        });
+
+        slangFrame.setVisible(true);
+    }
+
+    // Hàm kiểm tra đáp án
+    private void checkAnswer(String selectedAnswer, String correctAnswer) {
+        String message;
+        if (selectedAnswer.equals(correctAnswer)) {
+            message = " ༼ つ ◕_◕ ༽つ Congratulations! ";
+        } else {
+            message = "o(╥﹏╥)o You wrong! ";
+        }
+
+        // Tạo cửa sổ pop-up thông báo kết quả
+        JOptionPane.showMessageDialog(null, message, "Result", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public void quizDefinition() {
+        JFrame definitionFrame = new JFrame("Quiz Definition");
+        definitionFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        definitionFrame.setSize(400, 400);
+        definitionFrame.setLayout(new GridLayout(2, 1));
+
+        Random rand = new Random();
+        List<String> slangList = new ArrayList<>(dictionary.keySet());
+        int randomIndex = rand.nextInt(slangList.size());
+        String randomSlang = slangList.get(randomIndex);
+        // randomSlang là đáp án đúng
+
+        StringBuilder question = new StringBuilder();
+        for(String definition: dictionary.get(randomSlang)){
+            question.append("- ").append(definition).append("\n");
+        }
+
+        JPanel questionPanel = new JPanel();
+        definitionFrame.add(questionPanel);
+        JLabel definitionLabel = new JLabel();
+        definitionLabel.setText(question.toString());
+        definitionLabel.setFont(new Font("Serif", Font.BOLD, 24));
+        questionPanel.add(definitionLabel);
+
+        JPanel answerPanel = new JPanel();
+        definitionFrame.add(answerPanel);
+        answerPanel.setLayout(new GridLayout(2, 2));
+        JButton btn_a1 = new JButton();
+        JButton btn_a2 = new JButton();
+        JButton btn_a3 = new JButton();
+        JButton btn_a4 = new JButton();
+        answerPanel.add(btn_a1);
+        answerPanel.add(btn_a2);
+        answerPanel.add(btn_a3);
+        answerPanel.add(btn_a4);
+
+        List<String> answerList = new ArrayList<>();
+        answerList.add(randomSlang);
+
+        // Danh sách chưa tất cả SlangWord
+        List<String> allSlangWord = new ArrayList<>();
+        for(String slang : dictionary.keySet()){
+            allSlangWord.add(slang);
+        }
+        // loại bỏ đáp án đúng ra khỏi danh sách
+        allSlangWord.remove(randomSlang);
+
+        // Random ra 3 slang word ngẫu nhiên khác
+        List<String> shuffledSlangWords = new ArrayList<>();
+        Collections.shuffle(allSlangWord);
+
+        for (int i = 0; i < 3; i++) {
+            answerList.add(allSlangWord.get(i));
+        }
+
+        // Random vị trí của đáp án đúng trong danh sách đáp án
+        Collections.shuffle(answerList);
+
+        // Gán các đáp án vào các nút
+        if (answerList.size() >= 4){
+            btn_a1.setText(answerList.get(0));
+            btn_a2.setText(answerList.get(1));
+            btn_a3.setText(answerList.get(2));
+            btn_a4.setText(answerList.get(3));
+        }
+
+        btn_a1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                checkAnswer(btn_a1.getText(), randomSlang);
+                definitionFrame.dispose();
+            }
+        });
+
+        btn_a2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                checkAnswer(btn_a2.getText(), randomSlang);
+                definitionFrame.dispose();
+            }
+        });
+
+        btn_a3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                checkAnswer(btn_a3.getText(), randomSlang);
+                definitionFrame.dispose();
+            }
+        });
+
+        btn_a4.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                checkAnswer(btn_a4.getText(), randomSlang);
+                definitionFrame.dispose();
+            }
+        });
+
+        definitionFrame.setVisible(true);
+    }
+
 }

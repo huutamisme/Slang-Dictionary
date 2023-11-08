@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.*;
 import java.awt.event.*;
+import java.util.List;
 
 public class Main {
 
@@ -12,16 +13,11 @@ public class Main {
                     ComponentOrientation.RIGHT_TO_LEFT);
         }
 
-        pane.setLayout(new GridBagLayout());
-        GridBagConstraints constraints = new GridBagConstraints();
-        constraints.fill = GridBagConstraints.HORIZONTAL;
-        constraints.insets = new Insets(5, 5, 5, 5); // Khoảng cách giữa các nút
-        constraints.weightx = 1.0;
+        pane.setLayout(new GridLayout(4,3));
+
 
         JButton searchBySlang_btn = new JButton("Search Slang Word");
-        constraints.gridx = 0;
-        constraints.gridy = 0;
-        pane.add(searchBySlang_btn,constraints);
+        pane.add(searchBySlang_btn);
         searchBySlang_btn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -30,9 +26,7 @@ public class Main {
         });
 
         JButton searchByDefinition_btn = new JButton("Search Definition");
-        constraints.gridx = 1;
-        constraints.gridy = 0;
-        pane.add(searchByDefinition_btn,constraints);
+        pane.add(searchByDefinition_btn);
         searchByDefinition_btn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -41,9 +35,8 @@ public class Main {
         });
 
         JButton showHistory_btn = new JButton("History");
-        constraints.gridx = 2;
-        constraints.gridy = 0;
-        pane.add(showHistory_btn, constraints);
+
+        pane.add(showHistory_btn);
         showHistory_btn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -52,9 +45,7 @@ public class Main {
         });
 
         JButton addSlangWord_btn = new JButton("Add Slang Word");
-        constraints.gridx = 0;
-        constraints.gridy = 1;
-        pane.add(addSlangWord_btn, constraints);
+        pane.add(addSlangWord_btn);
         addSlangWord_btn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -63,9 +54,7 @@ public class Main {
         });
 
         JButton editSlangWord_btn = new JButton("Edit Slang Word");
-        constraints.gridx = 1;
-        constraints.gridy = 1;
-        pane.add(editSlangWord_btn, constraints);
+        pane.add(editSlangWord_btn);
         editSlangWord_btn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -74,9 +63,7 @@ public class Main {
         });
 
         JButton deleteSlangWord_btn = new JButton("Delete Slang Word");
-        constraints.gridx = 2;
-        constraints.gridy = 1;
-        pane.add(deleteSlangWord_btn, constraints);
+        pane.add(deleteSlangWord_btn);
         deleteSlangWord_btn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -84,21 +71,9 @@ public class Main {
             }
         });
 
-        JButton resetDictionary_btn = new JButton("Reset Dictionary");
-        constraints.gridx = 3;
-        constraints.gridy = 1;
-        pane.add(resetDictionary_btn, constraints);
-        resetDictionary_btn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dictionary.resetDictionary();
-            }
-        });
 
         JButton randomSlangWord_btn = new JButton("Random Slang Word");
-        constraints.gridx = 0;
-        constraints.gridy = 2;
-        pane.add(randomSlangWord_btn, constraints);
+        pane.add(randomSlangWord_btn);
         randomSlangWord_btn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -106,31 +81,69 @@ public class Main {
             }
         });
 
-        JButton quizSlangWord_btn = new JButton("Quiz Slang Word");
-        constraints.gridx = 1;
-        constraints.gridy = 2;
-        pane.add(quizSlangWord_btn, constraints);
+        JButton quiz_btn = new JButton("Quiz");
+        pane.add(quiz_btn);
+        quiz_btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame quizFrame = new JFrame("Quiz");
+                quizFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                quizFrame.setSize(400, 200);
+                quizFrame.setLayout(new GridLayout(1,2));
 
-        JButton quizDefinition_btn = new JButton("Quiz Definition");
-        constraints.gridx = 2;
-        constraints.gridy = 2;
-        pane.add(quizDefinition_btn, constraints);
+                JButton quizSlang = new JButton("Quiz Slang Word");
+                quizFrame.add(quizSlang);
+                quizSlang.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        dictionary.quizSlang();
+                    }
+                });
+
+                JButton quizDefinition = new JButton("Quiz Definition");
+                quizFrame.add(quizDefinition);
+                quizDefinition.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        dictionary.quizDefinition();
+                    }
+                });
+
+
+                quizFrame.setVisible(true);
+            }
+        });
+
+        JButton resetDictionary_btn = new JButton("Reset Dictionary");
+        pane.add(resetDictionary_btn);
+        resetDictionary_btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dictionary.resetDictionary();
+            }
+        });
 
         JButton aboutme_btn = new JButton("About me");
-        constraints.gridx = 0;
-        constraints.gridy = 3;
-        pane.add(aboutme_btn, constraints);
+        pane.add(aboutme_btn);
+        aboutme_btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(null, "HỌ TÊN SINH VIÊN : HỒ HỮU TÂM \n MSSV: 21127421");
+            }
+        });
 
         JButton exit_btn = new JButton("Exit");
-        constraints.gridx = 1;
-        constraints.gridy = 3;
-        pane.add(exit_btn, constraints);
+        pane.add(exit_btn);
         exit_btn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.exit(0);
             }
         });
+
+        JButton hidden_btn = new JButton();
+        hidden_btn.setVisible(false);
+        pane.add(hidden_btn);
     }
 
 
@@ -139,10 +152,10 @@ public class Main {
 
         JFrame frame = new JFrame("Slang Word Dictionary");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        frame.setSize(500, 500);
         addComponents(frame.getContentPane(), dictionary);
 
-        frame.pack();
+
         frame.setVisible(true);
 
     }
