@@ -47,6 +47,22 @@ public class SlangDictionary {
             e.printStackTrace();
         }
     }
+
+    public void writeToFile(String filename) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+            for (Map.Entry<String, SlangDefinitionList> entry : dictionary.entrySet()) {
+                String slang = entry.getKey();
+                SlangDefinitionList def_list = entry.getValue();
+                String definitions = String.join("| ", def_list);
+                String line = slang + "`" + definitions;
+                writer.write(line);
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void showDictionary(){
         Set<String> slangword = this.dictionary.keySet();
         for(String slang : slangword){
@@ -234,6 +250,7 @@ public class SlangDictionary {
                     dictionary.put(slangWord, defList);
                     JOptionPane.showMessageDialog(addFrame, "Slang Word has been added successfully.");
                 }
+                writeToFile("data.txt");
 
                 // Clear input fields
                 slangWordField.setText("");
@@ -245,7 +262,7 @@ public class SlangDictionary {
     }
 
     public void editSlang(){
-        JFrame editFrame = new JFrame("Add Slang Word");
+        JFrame editFrame = new JFrame("Edit Slang Word");
         editFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         editFrame.setSize(400, 200);
 
@@ -294,6 +311,8 @@ public class SlangDictionary {
                     } else {
                     }
                 }
+
+                writeToFile("data.txt");
                 // Clear input fields
                 slangWordField.setText("");
                 definitionField.setText("");
@@ -303,7 +322,7 @@ public class SlangDictionary {
     }
 
     public void deleteSlang(){
-        JFrame deleteFrame = new JFrame("Add Slang Word");
+        JFrame deleteFrame = new JFrame("Delete Slang Word");
         deleteFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         deleteFrame.setSize(400, 200);
 
@@ -316,10 +335,6 @@ public class SlangDictionary {
         panel.add(slangWordLabel);
         panel.add(slangWordField);
 
-        JLabel definitionLabel = new JLabel("Definition:");
-        JTextField definitionField = new JTextField();
-        panel.add(definitionLabel);
-        panel.add(definitionField);
 
         JButton hidden_btn  = new JButton();
         hidden_btn.setVisible(false);
@@ -332,7 +347,6 @@ public class SlangDictionary {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String slangWord = slangWordField.getText();
-                String definition = definitionField.getText();
                 if(dictionary.containsKey(slangWord)){
                     int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete '" + slangWord + "' ?", "Confirm delete", JOptionPane.YES_NO_OPTION);
 
@@ -343,9 +357,9 @@ public class SlangDictionary {
                 } else {
                     JOptionPane.showMessageDialog(null, "Slang Word '" + slangWord + "' doesn't exist in dictionary !");
                 }
+                writeToFile("data.txt");
             }
         });
-
         deleteFrame.setVisible(true);
     }
     public void resetDictionary(){
@@ -437,7 +451,7 @@ public class SlangDictionary {
     public void quizSlang(){
         JFrame slangFrame = new JFrame("Quiz Slang Word");
         slangFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        slangFrame.setSize(400,400);
+        slangFrame.setSize(600,600);
         slangFrame.setLayout(new GridLayout(2,1));
 
         Random rand = new Random();
@@ -479,6 +493,8 @@ public class SlangDictionary {
         for (SlangDefinitionList definitions : dictionary.values()) {
             allDefinitions.add(definitions);
         }
+        // xóa định nghĩa đúng ra khỏi danh sách
+        allDefinitions.remove(correctAnswer);
 
         // Random ra 3 định nghĩa ngẫu nhiên từ danh sách tất cả các định nghĩa
         List<SlangDefinitionList> shuffledDefinitions = new ArrayList<>();
@@ -560,7 +576,7 @@ public class SlangDictionary {
     public void quizDefinition() {
         JFrame definitionFrame = new JFrame("Quiz Definition");
         definitionFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        definitionFrame.setSize(400, 400);
+        definitionFrame.setSize(600, 600);
         definitionFrame.setLayout(new GridLayout(2, 1));
 
         Random rand = new Random();
