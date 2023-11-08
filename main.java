@@ -66,6 +66,12 @@ public class Main {
         constraints.gridx = 1;
         constraints.gridy = 1;
         pane.add(editSlangWord_btn, constraints);
+        editSlangWord_btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dictionary.editSlang();
+            }
+        });
 
         JButton deleteSlangWord_btn = new JButton("Delete Slang Word");
         constraints.gridx = 2;
@@ -76,11 +82,23 @@ public class Main {
         constraints.gridx = 3;
         constraints.gridy = 1;
         pane.add(resetDictionary_btn, constraints);
+        resetDictionary_btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dictionary.resetDictionary();
+            }
+        });
 
         JButton randomSlangWord_btn = new JButton("Random Slang Word");
         constraints.gridx = 0;
         constraints.gridy = 2;
         pane.add(randomSlangWord_btn, constraints);
+        randomSlangWord_btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dictionary.randomSlang();
+            }
+        });
 
         JButton quizSlangWord_btn = new JButton("Quiz Slang Word");
         constraints.gridx = 1;
@@ -125,6 +143,7 @@ public class Main {
     public static void main (String[] args) {
         SlangDictionary dictionary = new SlangDictionary();
         dictionary.ReadFromFile("slang.txt");
+
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
