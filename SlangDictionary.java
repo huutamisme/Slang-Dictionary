@@ -221,18 +221,18 @@ public class SlangDictionary {
                         SlangDefinitionList defList = new SlangDefinitionList();
                         Collections.addAll(defList, definition);
                         dictionary.put(slangWord, defList);
-                        JOptionPane.showMessageDialog(addFrame, "Slang Word overwritten successfully.");
+                        JOptionPane.showMessageDialog(addFrame, "Slang Word has been overwritten successfully.");
                     } else if (choice == 1) { // Duplicate
                         SlangDefinitionList defList = dictionary.get(slangWord);
                         Collections.addAll(defList, definition);
                         dictionary.put(slangWord, defList);
-                        JOptionPane.showMessageDialog(addFrame, "Slang Word duplicated successfully.");
+                        JOptionPane.showMessageDialog(addFrame, "Slang Word has been duplicated successfully.");
                     }
                 } else {
                     SlangDefinitionList defList = new SlangDefinitionList();
                     Collections.addAll(defList, definition);
                     dictionary.put(slangWord, defList);
-                    JOptionPane.showMessageDialog(addFrame, "Slang Word added successfully.");
+                    JOptionPane.showMessageDialog(addFrame, "Slang Word has been added successfully.");
                 }
 
                 // Clear input fields
@@ -279,7 +279,7 @@ public class SlangDictionary {
                     SlangDefinitionList defList = new SlangDefinitionList();
                     Collections.addAll(defList, definition);
                     dictionary.put(slangWord, defList);
-                    JOptionPane.showMessageDialog(editFrame, "Slang Word edited successfully.");
+                    JOptionPane.showMessageDialog(editFrame, "Slang Word has been edited successfully.");
                 } else {
                     int option = JOptionPane.showConfirmDialog(null,
                             "Slang Word doesn't exist in the dictionary. Do you want to add it to dictionary ?",
@@ -302,6 +302,52 @@ public class SlangDictionary {
         editFrame.setVisible(true);
     }
 
+    public void deleteSlang(){
+        JFrame deleteFrame = new JFrame("Add Slang Word");
+        deleteFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        deleteFrame.setSize(400, 200);
+
+        JPanel panel = new JPanel();
+        deleteFrame.add(panel);
+        panel.setLayout(new GridLayout(4, 1));
+
+        JLabel slangWordLabel = new JLabel("Slang Word:");
+        JTextField slangWordField = new JTextField();
+        panel.add(slangWordLabel);
+        panel.add(slangWordField);
+
+        JLabel definitionLabel = new JLabel("Definition:");
+        JTextField definitionField = new JTextField();
+        panel.add(definitionLabel);
+        panel.add(definitionField);
+
+        JButton hidden_btn  = new JButton();
+        hidden_btn.setVisible(false);
+        panel.add(hidden_btn);
+
+        JButton deleteButton = new JButton("Delete");
+        panel.add(deleteButton);
+
+        deleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String slangWord = slangWordField.getText();
+                String definition = definitionField.getText();
+                if(dictionary.containsKey(slangWord)){
+                    int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete '" + slangWord + "' ?", "Confirm delete", JOptionPane.YES_NO_OPTION);
+
+                    if (confirm == JOptionPane.YES_OPTION) {
+                        dictionary.remove(slangWord);
+                        JOptionPane.showMessageDialog(null, "Slang Word '" + slangWord + "' has been deleted successfully !");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Slang Word '" + slangWord + "' doesn't exist in dictionary !");
+                }
+            }
+        });
+
+        deleteFrame.setVisible(true);
+    }
     public void resetDictionary(){
         dictionary = new HashMap<>();
         ReadFromFile("slang.txt");

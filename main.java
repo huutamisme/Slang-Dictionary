@@ -77,6 +77,12 @@ public class Main {
         constraints.gridx = 2;
         constraints.gridy = 1;
         pane.add(deleteSlangWord_btn, constraints);
+        deleteSlangWord_btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dictionary.deleteSlang();
+            }
+        });
 
         JButton resetDictionary_btn = new JButton("Reset Dictionary");
         constraints.gridx = 3;
