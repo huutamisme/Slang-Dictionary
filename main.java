@@ -81,36 +81,21 @@ public class Main {
             }
         });
 
-        JButton quiz_btn = new JButton("Quiz");
-        pane.add(quiz_btn);
-        quiz_btn.addActionListener(new ActionListener() {
+        JButton quiz_slang = new JButton("Quiz Slang Word");
+        pane.add(quiz_slang);
+        quiz_slang.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFrame quizFrame = new JFrame("Quiz");
-                quizFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                quizFrame.setSize(400, 200);
-                quizFrame.setLayout(new GridLayout(1,2));
+                dictionary.quizSlang();
+            }
+        });
 
-                JButton quizSlang = new JButton("Quiz Slang Word");
-                quizFrame.add(quizSlang);
-                quizSlang.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        dictionary.quizSlang();
-                    }
-                });
-
-                JButton quizDefinition = new JButton("Quiz Definition");
-                quizFrame.add(quizDefinition);
-                quizDefinition.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        dictionary.quizDefinition();
-                    }
-                });
-
-
-                quizFrame.setVisible(true);
+        JButton quiz_definition = new JButton("Quiz Definition");
+        pane.add(quiz_definition);
+        quiz_definition.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dictionary.quizDefinition();
             }
         });
 
@@ -140,10 +125,6 @@ public class Main {
                 System.exit(0);
             }
         });
-
-        JButton hidden_btn = new JButton();
-        hidden_btn.setVisible(false);
-        pane.add(hidden_btn);
     }
 
 
